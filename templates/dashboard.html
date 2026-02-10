@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h1>Welcome {{ user }} 👨‍⚕️</h1>
+
+<h2>Add Medicine</h2>
+
+<form method="POST">
+    <input type="text" name="name" placeholder="Medicine name" required><br><br>
+    <input type="number" name="stock" placeholder="Stock quantity" required><br><br>
+    <button type="submit">Add Medicine</button>
+</form>
+
+<br>
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>

@@ -2,14 +2,24 @@
 <html>
 <head>
     <title>PharmaFind</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 
-<h1>Welcome to PharmaFind 💊</h1>
-<p>Find medicines in nearby pharmacies</p>
+<h1>PharmaFind 💊</h1>
 
-<input type="text" placeholder="Search medicine">
-<button>Search</button>
+<form method="POST">
+    <input type="text" name="medicine" placeholder="Search medicine">
+    <button type="submit">Search</button>
+</form>
+
+<h2>Results:</h2>
+
+<ul>
+    {% for item in results %}
+        <li>{{ item[0] }} — {{ item[1] }} (Stock: {{ item[2] }})</li>
+    {% endfor %}
+</ul>
 
 </body>
 </html>
