@@ -8,13 +8,20 @@
 <body>
 
 <header>
-    <h1>PharmaFind 💊</h1>
-    <p>Find medicines in nearby pharmacies</p>
+    <div class="header-left">
+        <h1>PharmaFind 💊</h1>
+    </div>
+
+    <div class="header-right">
+        <a href="/login" target="_blank" rel="noopener noreferrer">Pharmacy Login</a>
+    </div>
 </header>
 
 <div class="container">
 
-    <form method="POST">
+    <p>Find medicines in nearby pharmacies</p>
+
+    <form method="POST" class="search-box">
         <input type="text" name="medicine" placeholder="Search medicine" required>
         <button type="submit">Search</button>
     </form>
@@ -24,15 +31,12 @@
     <ul>
         {% for item in results %}
             <li>
-                <strong>{{ item[0] }}</strong> <br>
-                Shop: {{ item[1] }} <br>
+                <strong>{{ item[0] }}</strong><br>
+                Shop: {{ item[1] }}<br>
                 Stock: {{ item[2] }}
             </li>
         {% endfor %}
     </ul>
-
-    <br>
-    <a href="/login">Pharmacy Login</a>
 
 </div>
 
