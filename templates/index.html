@@ -2,24 +2,39 @@
 <html>
 <head>
     <title>PharmaFind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 
-<h1>PharmaFind 💊</h1>
+<header>
+    <h1>PharmaFind 💊</h1>
+    <p>Find medicines in nearby pharmacies</p>
+</header>
 
-<form method="POST">
-    <input type="text" name="medicine" placeholder="Search medicine">
-    <button type="submit">Search</button>
-</form>
+<div class="container">
 
-<h2>Results:</h2>
+    <form method="POST">
+        <input type="text" name="medicine" placeholder="Search medicine" required>
+        <button type="submit">Search</button>
+    </form>
 
-<ul>
-    {% for item in results %}
-        <li>{{ item[0] }} — {{ item[1] }} (Stock: {{ item[2] }})</li>
-    {% endfor %}
-</ul>
+    <h2>Results:</h2>
+
+    <ul>
+        {% for item in results %}
+            <li>
+                <strong>{{ item[0] }}</strong> <br>
+                Shop: {{ item[1] }} <br>
+                Stock: {{ item[2] }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="/login">Pharmacy Login</a>
+
+</div>
 
 </body>
 </html>

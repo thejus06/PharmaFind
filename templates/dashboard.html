@@ -2,22 +2,28 @@
 <html>
 <head>
     <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>Welcome {{ user }} 👨‍⚕️</h1>
+<header>
+    <h1>Welcome {{ user }} 👨‍⚕️</h1>
+</header>
 
-<h2>Add Medicine</h2>
+<div class="container">
 
-<form method="POST">
-    <input type="text" name="name" placeholder="Medicine name" required><br><br>
-    <input type="number" name="stock" placeholder="Stock quantity" required><br><br>
-    <button type="submit">Add Medicine</button>
-</form>
+    <h2>Add Medicine</h2>
 
-<br>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Medicine name" required><br><br>
+        <input type="number" name="stock" placeholder="Stock quantity" required><br><br>
+        <button type="submit">Add Medicine</button>
+    </form>
 
-<a href="/logout">Logout</a>
+    <br>
+    <a href="/logout">Logout</a>
+
+</div>
 
 </body>
 </html>
