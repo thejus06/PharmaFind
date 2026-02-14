@@ -36,14 +36,31 @@ def check_login(username, password):
     conn.close()
     return user
 
-
 def add_medicine(name, stock, shop):
     conn = sqlite3.connect("pharma.db")
     cursor = conn.cursor()
+
+    # Check if medicine already exists for this pharmacy
     cursor.execute(
-        "INSERT INTO medicines (name, shop, stock) VALUES (?, ?, ?)",
-        (name, shop, stock)
+        "SELECT id, stock FROM medicines WHERE name=? AND shop=?",
+        (name, shop)
     )
+    existing = cursor.fetchone()
+
+    if existing:
+        # Update stock
+        new_stock = existing[1] + int(stock)
+        cursor.execute(
+            "UPDATE medicines SET stock=? WHERE id=?",
+            (new_stock, existing[0])
+        )
+    else:
+        # Insert new medicine
+        cursor.execute(
+            "INSERT INTO medicines (name, shop, stock) VALUES (?, ?, ?)",
+            (name, shop, stock)
+        )
+
     conn.commit()
     conn.close()
 
