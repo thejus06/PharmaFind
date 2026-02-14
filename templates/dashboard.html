@@ -30,7 +30,11 @@
             {% for med in medicines %}
                 <li>
                     <strong>{{ med[1] }}</strong><br>
-                    Stock: {{ med[2] }}
+                    Stock: {{ med[2] }}<br><br>
+
+                    <a href="/edit/{{ med[0] }}">
+                        <button>Edit</button>
+                    </a>
                 </li>
             {% endfor %}
         </ul>
