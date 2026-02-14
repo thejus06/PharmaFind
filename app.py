@@ -123,6 +123,32 @@ def logout():
     session.pop("user", None)
     return redirect("/")
 
+@app.route("/edit/<int:medicine_id>", methods=["GET", "POST"])
+def edit_medicine(medicine_id):
+    if "user" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("pharma.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        new_stock = request.form["stock"]
+        cursor.execute(
+            "UPDATE medicines SET stock=? WHERE id=? AND shop=?",
+            (new_stock, medicine_id, session["user"])
+        )
+        conn.commit()
+        conn.close()
+        return redirect("/dashboard")
+
+    cursor.execute(
+        "SELECT id, name, stock FROM medicines WHERE id=? AND shop=?",
+        (medicine_id, session["user"])
+    )
+    medicine = cursor.fetchone()
+    conn.close()
+
+    return render_template("edit.html", medicine=medicine)
 
 if __name__ == "__main__":
     app.run(debug=True)
