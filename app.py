@@ -150,5 +150,23 @@ def edit_medicine(medicine_id):
 
     return render_template("edit.html", medicine=medicine)
 
+@app.route("/delete/<int:medicine_id>")
+def delete_medicine(medicine_id):
+    if "user" not in session:
+        return redirect("/login")
+
+    conn = sqlite3.connect("pharma.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "DELETE FROM medicines WHERE id=? AND shop=?",
+        (medicine_id, session["user"])
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/dashboard")
+
 if __name__ == "__main__":
     app.run(debug=True)
