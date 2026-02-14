@@ -21,6 +21,23 @@
         <button type="submit">Add Medicine</button>
     </form>
 
+    <hr>
+
+    <h2>Your Medicines</h2>
+
+    {% if medicines %}
+        <ul>
+            {% for med in medicines %}
+                <li>
+                    <strong>{{ med[1] }}</strong><br>
+                    Stock: {{ med[2] }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No medicines added yet.</p>
+    {% endif %}
+
     <br>
     <a href="/logout">Logout</a>
 
