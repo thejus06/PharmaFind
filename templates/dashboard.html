@@ -3,7 +3,6 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 
@@ -11,52 +10,53 @@
     <div class="header-left">PharmaFind 💊</div>
     <div class="header-right">
         <a href="/">Home</a>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <a href="/logout">Logout</a>
     </div>
 </header>
 
 <div class="container">
 
-    <h2>Add Medicine</h2>
+    <div class="auth-card" style="max-width:500px">
 
-    <form method="POST">
-        <input type="text" name="name" placeholder="Medicine name" required><br><br>
-        <input type="number" name="stock" placeholder="Stock quantity" required><br><br>
-        <button type="submit">Add Medicine</button>
-    </form>
+        <h2>Add Medicine</h2>
 
-    <hr><hr>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Medicine name" required>
+            <input type="number" name="stock" placeholder="Stock quantity" required>
+            <button type="submit">Add Medicine</button>
+        </form>
 
-<h2>Pharmacy Location</h2>
+        <hr style="margin:25px 0; opacity:0.2;">
 
-<form method="POST" action="/update_location">
-    <input type="text" name="latitude" placeholder="Latitude" required><br><br>
-    <input type="text" name="longitude" placeholder="Longitude" required><br><br>
-    <button type="submit">Update Location</button>
-</form>
+        <h2>Pharmacy Location</h2>
 
-    <h2>Your Medicines</h2>
+        <form method="POST" action="/update_location">
+            <input type="text" name="latitude" placeholder="Latitude">
+            <input type="text" name="longitude" placeholder="Longitude">
+            <button type="submit">Update Location</button>
+        </form>
 
-    {% if medicines %}
-        <ul>
-            {% for med in medicines %}
-                <li>
-                    <strong>{{ med[1] }}</strong><br>
-                    Stock: {{ med[2] }}<br><br>
+        <hr style="margin:25px 0; opacity:0.2;">
 
-                    <a href="/edit/{{ med[0] }}"><button>Edit</button></a>
+        <h2>Your Medicines</h2>
 
-                    <a href="/delete/{{ med[0] }}"><button class="delete">Delete</button></a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No medicines added yet.</p>
-    {% endif %}
+        {% for med in medicines %}
+        <div class="result-card" style="text-align:left">
+            <strong>{{ med[1] }}</strong><br>
+            Stock: {{ med[2] }}<br><br>
 
-    <br>
-    <a href="/logout">Logout</a>
+            <div class="button-row" style="justify-content:flex-start">
+                <a href="/edit/{{ med[0] }}">
+                    <button>Edit</button>
+                </a>
+                <a href="/delete/{{ med[0] }}">
+                    <button class="delete">Delete</button>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
 
 </div>
 

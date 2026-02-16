@@ -7,29 +7,40 @@
 <body>
 
 <header>
-    <h1>Register Pharmacy</h1>
+    <div class="header-left">PharmaFind 💊</div>
 </header>
 
 <div class="container">
 
-<form method="POST">
+    <div class="auth-card">
 
-    <input type="text" name="shop_name" placeholder="Pharmacy Name" required><br><br>
-    <input type="text" name="username" placeholder="Login Username" required><br><br>
-    <input type="password" name="password" placeholder="Password" required><br><br>
+        <h2>Register Pharmacy</h2>
 
-    <h3>Location</h3>
+        <form method="POST">
+            <input type="text" name="shop_name" placeholder="Pharmacy Name" required>
+            <input type="text" name="username" placeholder="Login Username" required>
+            <input type="password" name="password" placeholder="Password" required>
 
-    <input type="text" name="latitude" id="lat" placeholder="Latitude"><br><br>
-    <input type="text" name="longitude" id="lon" placeholder="Longitude"><br><br>
+            <h3 style="margin-top:15px">Location</h3>
 
-    <button type="button" onclick="getLocation()">Use GPS</button><br><br>
+            <input type="text" name="latitude" id="lat" placeholder="Latitude">
+            <input type="text" name="longitude" id="lon" placeholder="Longitude">
 
-    <button type="submit">Register</button>
+            <div class="button-row">
+                <button type="button" class="btn-secondary" onclick="getLocation()">
+                    Use GPS
+                </button>
+                <button type="submit">
+                    Register
+                </button>
+            </div>
+        </form>
 
-</form>
+        <div class="auth-links">
+            <a href="/login">Back to Login</a>
+        </div>
 
-<p id="gps_status"></p>
+    </div>
 
 </div>
 
@@ -39,7 +50,6 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(function(pos) {
             document.getElementById("lat").value = pos.coords.latitude;
             document.getElementById("lon").value = pos.coords.longitude;
-            document.getElementById("gps_status").innerText = "GPS location set";
         });
     }
 }

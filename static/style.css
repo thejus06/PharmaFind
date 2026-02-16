@@ -191,3 +191,39 @@ header {
 .auth-links a:hover {
     text-decoration: underline;
 }
+
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-card input,
+.auth-card button {
+    width: 100%;
+    max-width: 260px;
+}
+
+/* BUTTON ROW */
+.button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.button-row button {
+    flex: 1;
+    max-width: 140px;
+}
+
+/* SECONDARY BUTTON */
+.btn-secondary {
+    background: linear-gradient(135deg, #a9bdfc, #c4d3ff);
+    color: #2a3a6a;
+    box-shadow: 0 6px 14px rgba(120,140,255,0.25);
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 10px 20px rgba(120,140,255,0.35);
+}
