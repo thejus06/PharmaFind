@@ -47,6 +47,29 @@ def search_medicine(name):
     conn.close()
     return results
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        shop_name = request.form["shop_name"]
+        latitude = request.form.get("latitude")
+        longitude = request.form.get("longitude")
+
+        conn = sqlite3.connect("pharma.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "INSERT INTO users (username, password, shop_name, latitude, longitude) VALUES (?, ?, ?, ?, ?)",
+            (username, password, shop_name, latitude, longitude)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/login")
+
+    return render_template("register.html")
 
 def check_login(username, password):
     conn = sqlite3.connect("pharma.db")

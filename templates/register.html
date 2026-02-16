@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Pharmacy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Register Pharmacy</h1>
+</header>
+
+<div class="container">
+
+<form method="POST">
+
+    <input type="text" name="shop_name" placeholder="Pharmacy Name" required><br><br>
+    <input type="text" name="username" placeholder="Login Username" required><br><br>
+    <input type="password" name="password" placeholder="Password" required><br><br>
+
+    <h3>Location</h3>
+
+    <input type="text" name="latitude" id="lat" placeholder="Latitude"><br><br>
+    <input type="text" name="longitude" id="lon" placeholder="Longitude"><br><br>
+
+    <button type="button" onclick="getLocation()">Use GPS</button><br><br>
+
+    <button type="submit">Register</button>
+
+</form>
+
+<p id="gps_status"></p>
+
+</div>
+
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            document.getElementById("lat").value = pos.coords.latitude;
+            document.getElementById("lon").value = pos.coords.longitude;
+            document.getElementById("gps_status").innerText = "GPS location set";
+        });
+    }
+}
+</script>
+
+</body>
+</html>
