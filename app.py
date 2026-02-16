@@ -170,5 +170,26 @@ def delete_medicine(medicine_id):
 
     return redirect("/dashboard")
 
+@app.route("/update_location", methods=["POST"])
+def update_location():
+    if "user" not in session:
+        return redirect("/login")
+
+    latitude = request.form["latitude"]
+    longitude = request.form["longitude"]
+
+    conn = sqlite3.connect("pharma.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE users SET latitude=?, longitude=? WHERE username=?",
+        (latitude, longitude, session["user"])
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/dashboard")
+
 if __name__ == "__main__":
     app.run(debug=True)
