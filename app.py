@@ -4,6 +4,24 @@ import sqlite3
 app = Flask(__name__)
 app.secret_key = "secretkey"
 
+import math
+
+def calculate_distance(lat1, lon1, lat2, lon2):
+    # Haversine formula
+    R = 6371  # Earth radius in km
+
+    lat1 = math.radians(float(lat1))
+    lon1 = math.radians(float(lon1))
+    lat2 = math.radians(float(lat2))
+    lon2 = math.radians(float(lon2))
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+
+    return round(R * c, 2)
 
 # ----------------------
 # DATABASE FUNCTIONS
@@ -83,9 +101,32 @@ def get_pharmacy_medicines(shop):
 @app.route("/", methods=["GET", "POST"])
 def home():
     results = []
+
     if request.method == "POST":
         medicine = request.form["medicine"]
-        results = search_medicine(medicine)
+        user_lat = request.form.get("user_lat")
+        user_lon = request.form.get("user_lon")
+
+        raw_results = search_medicine(medicine)
+
+        for r in raw_results:
+            name, shop, stock, plat, plon = r
+
+            distance = None
+
+            try:
+                if user_lat and user_lon and plat and plon:
+                    distance = calculate_distance(
+                        float(user_lat),
+                        float(user_lon),
+                        float(plat),
+                        float(plon)
+                    )
+            except:
+                distance = None
+
+            results.append((name, shop, stock, plat, plon, distance))
+
     return render_template("index.html", results=results)
 
 
