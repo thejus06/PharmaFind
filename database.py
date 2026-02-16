@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
+    shop_name TEXT,
     latitude REAL,
     longitude REAL
 )
@@ -26,8 +27,8 @@ CREATE TABLE IF NOT EXISTS users (
 
 # Sample user
 cursor.execute(
-    "INSERT OR IGNORE INTO users (username, password, latitude, longitude) VALUES (?, ?, ?, ?)",
-    ("pharmacy1", "1234", 8.5241, 76.9366)
+    "INSERT OR IGNORE INTO users (username, password, shop_name, latitude, longitude) VALUES (?, ?, ?, ?, ?)",
+    ("pharmacy1", "1234", "City Pharmacy", 8.5241, 76.9366)
 )
 
 
