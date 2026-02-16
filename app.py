@@ -32,12 +32,15 @@ def search_medicine(name):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT m.name, m.shop, SUM(m.stock) as total_stock,
-               u.latitude, u.longitude
+        SELECT m.name,
+               u.shop_name,
+               SUM(m.stock),
+               u.latitude,
+               u.longitude
         FROM medicines m
         JOIN users u ON m.shop = u.username
         WHERE m.name LIKE ?
-        GROUP BY m.name, m.shop
+        GROUP BY m.name, u.shop_name
     """, ('%' + name + '%',))
 
     results = cursor.fetchall()
