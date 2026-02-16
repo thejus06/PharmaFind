@@ -14,10 +14,12 @@ def search_medicine(name):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT name, shop, SUM(stock) as total_stock
-        FROM medicines
-        WHERE name LIKE ?
-        GROUP BY name, shop
+        SELECT m.name, m.shop, SUM(m.stock) as total_stock,
+               u.latitude, u.longitude
+        FROM medicines m
+        JOIN users u ON m.shop = u.username
+        WHERE m.name LIKE ?
+        GROUP BY m.name, m.shop
     """, ('%' + name + '%',))
 
     results = cursor.fetchall()

@@ -18,16 +18,27 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    latitude REAL,
+    longitude REAL
 )
 """)
 
 # Sample user
-cursor.execute("INSERT OR IGNORE INTO users (username, password) VALUES ('pharmacy1', '1234')")
+cursor.execute(
+    "INSERT OR IGNORE INTO users (username, password, latitude, longitude) VALUES (?, ?, ?, ?)",
+    ("pharmacy1", "1234", 8.5241, 76.9366)
+)
+
 
 # Sample medicines
-cursor.execute("INSERT INTO medicines (name, shop, stock) VALUES ('Paracetamol', 'City Pharmacy', 20)")
-cursor.execute("INSERT INTO medicines (name, shop, stock) VALUES ('Ibuprofen', 'HealthPlus Medical', 15)")
+cursor.execute(
+    "INSERT INTO medicines (name, shop, stock) VALUES ('Paracetamol', 'City Pharmacy', 20)"
+)
+
+cursor.execute(
+    "INSERT INTO medicines (name, shop, stock) VALUES ('Ibuprofen', 'HealthPlus Medical', 15)"
+)
 
 conn.commit()
 conn.close()

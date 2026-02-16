@@ -33,7 +33,12 @@
             <li>
                 <strong>{{ item[0] }}</strong><br>
                 Shop: {{ item[1] }}<br>
-                Stock: {{ item[2] }}
+                Stock: {{ item[2] }}<br>
+
+                <a href="https://www.google.com/maps?q={{ item[3] }},{{ item[4] }}"
+                    target="_blank">
+                    View Location 📍
+                </a>
             </li>
         {% endfor %}
     </ul>
