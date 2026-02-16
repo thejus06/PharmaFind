@@ -40,30 +40,26 @@
 
     <ul>
         {% for item in results %}
-            <li>
-                <strong>{{ item[0] }}</strong><br>
-                Shop: {{ item[1] }}<br>
-                Stock: {{ item[2] }}<br>
+        <div class="result-card">
+            <strong>{{ item[0] }}</strong><br>
+            Pharmacy: {{ item[1] }}<br>
+            Stock: {{ item[2] }}<br>
 
-                {% if item[5] %}
-                    Distance: {{ item[5] }} km<br>
-                {% endif %}
+            {% if item[5] %}
+                Distance: {{ item[5] }} km<br>
+            {% endif %}
 
-                <a href="https://www.google.com/maps?q={{ item[3] }},{{ item[4] }}"
-                   target="_blank">
-                    Open in Google Maps 📍
-                </a>
-
-                <br><br>
+            <div class="map-frame">
                 <iframe
                     width="100%"
-                    height="200"
-                    style="border:0; border-radius:8px;"
+                    height="180"
+                    style="border:0"
                     loading="lazy"
                     allowfullscreen
                     src="https://maps.google.com/maps?q={{ item[3] }},{{ item[4] }}&z=15&output=embed">
                 </iframe>
-            </li>
+            </div>
+        </div>
         {% endfor %}
     </ul>
 
