@@ -111,9 +111,10 @@ def get_pharmacy_medicines(shop):
 # ----------------------
 @app.route("/", methods=["GET", "POST"])
 def home():
-    results = []
+    results = None
 
     if request.method == "POST":
+        results = []
         medicine = request.form["medicine"]
         user_lat = request.form.get("user_lat")
         user_lon = request.form.get("user_lon")
@@ -132,8 +133,7 @@ def home():
 
             results.append((name, shop, stock, plat, plon, distance, phone))
 
-        # SORT BY DISTANCE
-        results.sort(key=lambda x: x[5] if x[5] is not None else 9999)
+        results.sort(key=lambda x: x[5] if x[5] else 9999)
 
     return render_template("index.html", results=results)
 

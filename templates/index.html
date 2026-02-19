@@ -8,7 +8,11 @@
 <body>
 
 <header>
-    <div class="header-left">PharmaFind 💊</div>
+    <div class="header-left">
+        <span class="brand-text">PharmaFind</span>
+        <span class="brand-icon">💊</span>
+    </div>
+
     <div class="header-right">
         <a href="/login">Pharmacy Login</a>
     </div>
@@ -28,36 +32,38 @@
         <button type="submit">Search</button>
     </form>
 
-    <!-- GPS Debug -->
-    <p id="gps_status" style="color: gray; font-size: 14px;"></p>
-
+    {% if results is not none %}
     <h2>Results:</h2>
+    {% endif %}
 
-    <ul>
-        {% for item in results %}
-        <div class="result-card">
-            <strong>{{ item[0] }}</strong><br>
-            Pharmacy: {{ item[1] }}<br>
-            Phone: {{ item[6] }}<br>
-            Stock: {{ item[2] }}<br>
+    {% if results is not none %}
+        {% if results %}
+            {% for item in results %}
+                <div class="result-card">
+                    <strong>{{ item[0] }}</strong><br>
+                    Pharmacy: {{ item[1] }}<br>
+                    Phone: {{ item[6] }}<br>
+                    Stock: {{ item[2] }}<br>
 
-            {% if item[5] %}
-                Distance: {{ item[5] }} km<br>
-            {% endif %}
+                    {% if item[5] %}
+                        Distance: {{ item[5] }} km<br>
+                    {% endif %}
 
-            <div class="map-frame">
-                <iframe
-                    width="100%"
-                    height="180"
-                    style="border:0"
-                    loading="lazy"
-                    allowfullscreen
-                    src="https://maps.google.com/maps?q={{ item[3] }},{{ item[4] }}&z=15&output=embed">
-                </iframe>
+                    <div class="map-frame">
+                        <iframe
+                            src="https://maps.google.com/maps?q={{ item[3] }},{{ item[4] }}&z=15&output=embed"
+                            loading="lazy"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                No pharmacies found with this medicine.
             </div>
-        </div>
-        {% endfor %}
-    </ul>
+        {% endif %}
+    {% endif %}
 
 </div>
 
@@ -67,18 +73,8 @@ if (navigator.geolocation) {
         function(position) {
             document.getElementById("user_lat").value = position.coords.latitude;
             document.getElementById("user_lon").value = position.coords.longitude;
-
-            document.getElementById("gps_status").innerText =
-                "GPS: " + position.coords.latitude + ", " + position.coords.longitude;
-        },
-        function(error) {
-            document.getElementById("gps_status").innerText =
-                "GPS error: " + error.message;
         }
     );
-} else {
-    document.getElementById("gps_status").innerText =
-        "Geolocation not supported by this browser";
 }
 </script>
 

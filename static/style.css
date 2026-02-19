@@ -1,5 +1,6 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                 "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     background: linear-gradient(180deg, #f5f7fb, #eef2f9);
     margin: 0;
 }
@@ -8,34 +9,43 @@ body {
 header {
     background: linear-gradient(135deg, #5f8cff, #7aa2ff);
     color: white;
-    padding: 22px 40px;
+    padding: 18px 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 28px rgba(40,80,180,0.18);
 }
 
 .header-left {
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 600;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .header-right a {
-    color: rgba(255,255,255,0.95);
+    color: white;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 24px;
-    transition: opacity 0.2s;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px);
+    transition: background 0.2s, transform 0.15s;
 }
 
 .header-right a:hover {
-    opacity: 0.85;
+    background: rgba(255,255,255,0.28);
+    transform: translateY(-1px);
 }
 
 /* CARD */
 .container {
-    width: 60%;
+    width: 640px;
+    max-width: 94%;
     margin: 70px auto;
     padding: 40px;
     border-radius: 20px;
@@ -63,12 +73,10 @@ header {
 
 .search-box input {
     flex: 1;
-    padding: 14px 18px;
-    border-radius: 999px;
-    border: 1px solid #d9e2f3;
+    padding: 15px 18px;
+    border-radius: 14px;
+    border: 1px solid #e3e8f5;
     font-size: 15px;
-    outline: none;
-    transition: all 0.2s;
     background: #fff;
 }
 
@@ -87,7 +95,9 @@ header {
     font-weight: 600;
     letter-spacing: 0.2px;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(100,130,255,0.35);
+    box-shadow:
+        0 8px 18px rgba(100,130,255,0.38),
+        0 2px 4px rgba(0,0,0,0.08);
     transition: transform 0.15s, box-shadow 0.15s;
 }
 
@@ -103,22 +113,51 @@ header {
 
 /* RESULTS */
 .result-card {
-    background: rgba(255,255,255,0.85);
-    border-radius: 16px;
-    padding: 16px;
-    margin-top: 14px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    background: rgba(255,255,255,0.92);
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 16px;
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.06),
+        0 1px 2px rgba(0,0,0,0.04);
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #1c1c1e;
 }
 
 .result-card strong {
-    font-size: 16px;
-    color: #222;
+    font-size: 17px;
+    font-weight: 600;
+    color: #111;
+}
+
+.no-results {
+    margin-top: 18px;
+    padding: 22px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.7);
+    text-align: center;
+    color: #6b7280;
+    font-size: 15px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.05);
 }
 
 .map-frame {
-    margin-top: 10px;
-    border-radius: 12px;
+    margin-top: 14px;
+    border-radius: 14px;
     overflow: hidden;
+    width: 100%;
+}
+
+.map-frame iframe {
+    display: block;
+    width: 100%;
+    height: 190px;
+    border: 0;
 }
 
 /* LOGIN CARD */
@@ -226,4 +265,11 @@ header {
 
 .btn-secondary:hover {
     box-shadow: 0 10px 20px rgba(120,140,255,0.35);
+}
+.brand-text {
+    font-weight: 600;
+}
+
+.brand-icon {
+    font-size: 18px;
 }
