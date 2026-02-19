@@ -8,7 +8,12 @@
 <body>
 
 <header>
-    <h1>Edit {{ medicine[1] }}</h1>
+    <div class="header-left">PharmaFind 💊</div>
+    <div class="header-right">
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
 </header>
 
 <div class="container">
@@ -16,6 +21,8 @@
     <form method="POST">
         <label>Update Stock:</label><br><br>
         <input type="number" name="stock" value="{{ medicine[2] }}" required><br><br>
+        <label>Price (₹):</label><br><br>
+        <input type="number" step="0.01" name="price" value="{{ medicine[3] }}" required>
         <button type="submit">Save Changes</button>
     </form>
 

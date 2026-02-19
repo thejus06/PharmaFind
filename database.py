@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS medicines (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     shop TEXT NOT NULL,
-    stock INTEGER NOT NULL
+    stock INTEGER NOT NULL,
+    price REAL
 )
 """)
 
@@ -34,9 +35,9 @@ VALUES (?, ?, ?, ?, ?, ?)
 
 # Sample medicine
 cursor.execute("""
-INSERT INTO medicines (name, shop, stock)
-VALUES (?, ?, ?)
-""", ("Paracetamol", "pharmacy1", 20))
+INSERT INTO medicines (name, shop, stock, price)
+VALUES (?, ?, ?, ?)
+""", ("Paracetamol", "pharmacy1", 20, 15.0))
 
 conn.commit()
 conn.close()

@@ -42,7 +42,8 @@ def search_medicine(name):
                SUM(m.stock),
                u.latitude,
                u.longitude,
-               u.phone
+               u.phone,
+               m.price
         FROM medicines m
         JOIN users u ON m.shop = u.username
         WHERE m.name LIKE ?
@@ -70,7 +71,7 @@ def check_login(username, password):
 # ----------------------
 # MEDICINES
 # ----------------------
-def add_medicine(name, stock, shop):
+def add_medicine(name, stock, shop, price):
     conn = get_db()
     cursor = conn.cursor()
 
@@ -83,13 +84,13 @@ def add_medicine(name, stock, shop):
     if existing:
         new_stock = existing[1] + int(stock)
         cursor.execute(
-            "UPDATE medicines SET stock=? WHERE id=?",
-            (new_stock, existing[0])
+            "UPDATE medicines SET stock=?, price=? WHERE id=?",
+            (new_stock, price, existing[0])
         )
     else:
         cursor.execute(
-            "INSERT INTO medicines (name, shop, stock) VALUES (?, ?, ?)",
-            (name, shop, stock)
+            "INSERT INTO medicines (name, shop, stock, price) VALUES (?, ?, ?, ?)",
+            (name, shop, stock, price)
         )
 
     conn.commit()
@@ -122,7 +123,7 @@ def home():
         raw = search_medicine(medicine)
 
         for r in raw:
-            name, shop, stock, plat, plon, phone = r
+            name, shop, stock, plat, plon, phone, price = r
             distance = None
 
             try:
@@ -131,7 +132,7 @@ def home():
             except:
                 distance = None
 
-            results.append((name, shop, stock, plat, plon, distance, phone))
+            results.append((name, shop, stock, plat, plon, distance, phone, price))
 
         results.sort(key=lambda x: x[5] if x[5] else 9999)
 
@@ -194,7 +195,8 @@ def dashboard():
     if request.method == "POST":
         name = request.form["name"]
         stock = request.form["stock"]
-        add_medicine(name, stock, shop)
+        price = request.form["price"]
+        add_medicine(name, stock, shop, price)
 
     medicines = get_pharmacy_medicines(shop)
     return render_template("dashboard.html", medicines=medicines)
@@ -216,16 +218,17 @@ def edit_medicine(medicine_id):
 
     if request.method == "POST":
         new_stock = request.form["stock"]
+        new_price = request.form["price"]
         cursor.execute(
-            "UPDATE medicines SET stock=? WHERE id=? AND shop=?",
-            (new_stock, medicine_id, session["user"])
+            "UPDATE medicines SET stock=?, price=? WHERE id=? AND shop=?",
+            (new_stock, new_price, medicine_id, session["user"])
         )
         conn.commit()
         conn.close()
         return redirect("/dashboard")
 
     cursor.execute(
-        "SELECT id, name, stock FROM medicines WHERE id=? AND shop=?",
+        "SELECT id, name, stock, price FROM medicines WHERE id=? AND shop=?",
         (medicine_id, session["user"])
     )
     medicine = cursor.fetchone()

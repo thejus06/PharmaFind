@@ -29,7 +29,7 @@
         <input type="hidden" name="user_lat" id="user_lat">
         <input type="hidden" name="user_lon" id="user_lon">
 
-        <button type="submit">Search</button>
+        <button type="submit" id="searchBtn" disabled>Search</button>
     </form>
 
     {% if results is not none %}
@@ -44,6 +44,7 @@
                     Pharmacy: {{ item[1] }}<br>
                     Phone: {{ item[6] }}<br>
                     Stock: {{ item[2] }}<br>
+                    Price: ₹{{ item[7] }}<br>
 
                     {% if item[5] %}
                         Distance: {{ item[5] }} km<br>
@@ -68,13 +69,23 @@
 </div>
 
 <script>
+const btn = document.getElementById("searchBtn");
+
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
         function(position) {
             document.getElementById("user_lat").value = position.coords.latitude;
             document.getElementById("user_lon").value = position.coords.longitude;
+
+            btn.disabled = false;
+        },
+        function() {
+            // allow search even if GPS fails
+            btn.disabled = false;
         }
     );
+} else {
+    btn.disabled = false;
 }
 </script>
 
