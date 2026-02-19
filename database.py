@@ -3,6 +3,19 @@ import sqlite3
 conn = sqlite3.connect("pharma.db")
 cursor = conn.cursor()
 
+# Users table (WITH PHONE)
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    shop_name TEXT,
+    phone TEXT,
+    latitude REAL,
+    longitude REAL
+)
+""")
+
 # Medicines table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS medicines (
@@ -13,35 +26,19 @@ CREATE TABLE IF NOT EXISTS medicines (
 )
 """)
 
-# Users table
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL,
-    shop_name TEXT,
-    latitude REAL,
-    longitude REAL
-)
-""")
-
 # Sample user
-cursor.execute(
-    "INSERT OR IGNORE INTO users (username, password, shop_name, latitude, longitude) VALUES (?, ?, ?, ?, ?)",
-    ("pharmacy1", "1234", "City Pharmacy", 8.5241, 76.9366)
-)
+cursor.execute("""
+INSERT INTO users (username, password, shop_name, phone, latitude, longitude)
+VALUES (?, ?, ?, ?, ?, ?)
+""", ("pharmacy1", "1234", "City Pharmacy", "9999999999", 8.5241, 76.9366))
 
-
-# Sample medicines
-cursor.execute(
-    "INSERT INTO medicines (name, shop, stock) VALUES ('Paracetamol', 'City Pharmacy', 20)"
-)
-
-cursor.execute(
-    "INSERT INTO medicines (name, shop, stock) VALUES ('Ibuprofen', 'HealthPlus Medical', 15)"
-)
+# Sample medicine
+cursor.execute("""
+INSERT INTO medicines (name, shop, stock)
+VALUES (?, ?, ?)
+""", ("Paracetamol", "pharmacy1", 20))
 
 conn.commit()
 conn.close()
 
-print("Database created successfully!")
+print("Database created with phone support ✅")
